@@ -34,27 +34,32 @@ public class ServletUsuarioController extends HttpServlet {
 				daoUsuarioRepository.deletarUsuario(idUser);
 				request.setAttribute("msg", "Usuário deletado com sucesso! Operação não poderá ser desfeita.");
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
-			}
-			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarAjax")) {
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarAjax")) {
 				String idUser = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUser);
 				response.getWriter().write("Usuário deletado com sucesso! Operação não poderá ser desfeita.");
-			}
-			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("BuscarUserAjax")) {
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("BuscarUserAjax")) {
 				String nomeBusca = request.getParameter("nomeBusca");
 				System.out.println(nomeBusca);
-			    List<ModelLogin> dadosJsonUser =  daoUsuarioRepository.consultarUsuarioList(nomeBusca);
-			    
-			    /* adicionar dependencia Jacson Json no pom do maven */
-			    ObjectMapper mapper = new ObjectMapper();
-			    String json = mapper.writeValueAsString(dadosJsonUser);
-			    
+				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultarUsuarioList(nomeBusca);
+
+				/* adicionar dependencia Jacson Json no pom do maven */
+				ObjectMapper mapper = new ObjectMapper();
+				String json = mapper.writeValueAsString(dadosJsonUser);
+
 				response.getWriter().write(json);
-			}
-			else {
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
+				String id = request.getParameter("id");
+
+				ModelLogin modelLogin = daoUsuarioRepository.consultausuarioId(id);
+				request.setAttribute("msg", "Usuário em edição");
+				request.setAttribute("modelLogin", modelLogin);
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+
+			} else {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			RequestDispatcher redirecionar = request.getRequestDispatcher("erro.jsp");
@@ -98,9 +103,8 @@ public class ServletUsuarioController extends HttpServlet {
 			}
 
 			request.setAttribute("msg", msg);
-			RequestDispatcher redirecionar = request.getRequestDispatcher("principal/usuario.jsp");
 			request.setAttribute("modelLogin", modelLogin);
-			redirecionar.forward(request, response);
+			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();

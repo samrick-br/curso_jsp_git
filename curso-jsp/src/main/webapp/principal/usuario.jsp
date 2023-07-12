@@ -130,7 +130,7 @@
 						</div>
 					</div>
 					<table class="table table-sm table-responsive table-hover"
-						id="tabelaResultadosUser">
+						style="height: 300px; overflow: auto;" id="tabelaResultadosUser">
 						<thead class="table-waves-effect waves-light btn-grd-info">
 							<tr>
 								<th scope="col">ID</th>
@@ -145,6 +145,7 @@
 					</table>
 				</div>
 				<div class="modal-footer">
+					<span style="align-content: flex-start;" id="totalResultados"></span>
 					<button type="button"
 						class="btn waves-effect waves-light btn-grd-inverse"
 						data-dismiss="modal">Fechar</button>
@@ -154,6 +155,13 @@
 	</div>
 
 	<script type="text/javascript">
+		function verEditar(id) {
+
+			var urlAction = document.getElementById('formUsuario').action;
+			window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
+
+		}
+
 		function buscarUsuario() {
 			var nomeBusca = document.getElementById('nomeBusca').value;
 			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') { /* Validando que o campo tem que ter valor para buscar no banco*/
@@ -180,8 +188,13 @@
 																	+ json[p].nome
 																	+ '</td> <td>'
 																	+ json[p].login
-																	+ '</td> <td><button type="button" class="btn waves-effect waves-light btn-grd-success">Ver</button></td> </tr>');
+																	+ '</td> <td><button type="button" onclick="verEditar('
+																	+ json[p].id
+																	+ ')" class="btn waves-effect waves-light btn-grd-success">Ver</button></td> </tr>');
 										}
+										document
+												.getElementById('totalResultados').textContent = json.length
+												+ ' usuarios encontrados.';
 									}
 								}).fail(
 								function(xhr, status, errorThrown) {
