@@ -47,7 +47,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("BuscarUserAjax")) {
 				String nomeBusca = request.getParameter("nomeBusca");
-				System.out.println(nomeBusca);
+				//System.out.println(nomeBusca);
 				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultarUsuarioList(nomeBusca,
 						super.getUsuarioLogado(request));
 

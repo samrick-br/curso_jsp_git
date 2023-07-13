@@ -31,8 +31,8 @@ public class DAOUsuarioRepository {
 			statement.execute();
 			connection.commit();
 		} else {
-			String sql = "UPDATE model_login SET login=?, senha=?, nome=?, email=?, user_id_alter=?	WHERE id = '" + objeto.getId()
-					+ "'";
+			String sql = "UPDATE model_login SET login=?, senha=?, nome=?, email=?, user_id_alter=?	WHERE id = '"
+					+ objeto.getId() + "'";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, objeto.getLogin());
@@ -120,11 +120,10 @@ public class DAOUsuarioRepository {
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setEmail(resultado.getString("email"));
 			modelLogin.setLogin(resultado.getString("login"));
-
 		}
 		return modelLogin;
 	}
-	
+
 	public ModelLogin consultausuarioLogado(String login) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -139,7 +138,7 @@ public class DAOUsuarioRepository {
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setEmail(resultado.getString("email"));
 			modelLogin.setLogin(resultado.getString("login"));
-
+			modelLogin.setUseradmin(resultado.getBoolean("useradmin"));
 		}
 		return modelLogin;
 	}

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<input type="hidden" name="acao" id="acao" value="">
 <nav class="navbar header-navbar pcoded-header">
 	<div class="navbar-wrapper">
 		<div class="navbar-logo">
@@ -108,8 +108,8 @@
 								class="ti-settings"></i> Configurações
 						</a></li>
 						<li class="waves-effect waves-light"><a
-							href="<%=request.getContextPath()%>/usuario.jsp?acao=listarUser">
-								<i class="ti-user"></i> Perfil
+							href="ServletUsuarioController?acao=buscarEditar&id=${idUser}">
+								<i class="ti-user"></i> Atualizar Perfil
 						</a></li>
 						<li class="waves-effect waves-light"><a
 							href="email-inbox.html"> <i class="ti-email"></i> Minhas
