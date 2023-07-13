@@ -20,7 +20,8 @@
 				</div>
 			</div>
 			<a href="#"> <img class="img-fluid"
-				src="<%= request.getContextPath() %>/assets/images/logo.png" alt="Theme-Logo" />
+				src="<%=request.getContextPath()%>/assets/images/logo.png"
+				alt="Theme-Logo" />
 			</a> <a class="mobile-options waves-effect waves-light"> <i
 				class="ti-more"></i>
 			</a>
@@ -59,7 +60,7 @@
 						<li class="waves-effect waves-light">
 							<div class="media">
 								<img class="d-flex align-self-center img-radius"
-									src="<%= request.getContextPath() %>/assets/images/avatar-2.jpg"
+									src="<%=request.getContextPath()%>/assets/images/avatar-2.jpg"
 									alt="Generic placeholder image">
 								<div class="media-body">
 									<h5 class="notification-user">${usuario}</h5>
@@ -72,7 +73,7 @@
 						<li class="waves-effect waves-light">
 							<div class="media">
 								<img class="d-flex align-self-center img-radius"
-									src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg"
+									src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg"
 									alt="Generic placeholder image">
 								<div class="media-body">
 									<h5 class="notification-user">Joseph William</h5>
@@ -85,7 +86,7 @@
 						<li class="waves-effect waves-light">
 							<div class="media">
 								<img class="d-flex align-self-center img-radius"
-									src="<%= request.getContextPath() %>/assets/images/avatar-3.jpg"
+									src="<%=request.getContextPath()%>/assets/images/avatar-3.jpg"
 									alt="Generic placeholder image">
 								<div class="media-body">
 									<h5 class="notification-user">Sara Soudein</h5>
@@ -98,22 +99,25 @@
 					</ul></li>
 				<li class="user-profile header-notification"><a href="#!"
 					class="waves-effect waves-light"> <img
-						src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg" class="img-radius"
-						alt="User-Profile-Image"> <span>${usuario}</span> <i
-						class="ti-angle-down"></i>
+						src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg"
+						class="img-radius" alt="User-Profile-Image"> <span>${usuario}</span>
+						<i class="ti-angle-down"></i>
 				</a>
 					<ul class="show-notification profile-notification">
 						<li class="waves-effect waves-light"><a href="#!"> <i
 								class="ti-settings"></i> Configurações
 						</a></li>
 						<li class="waves-effect waves-light"><a
-							href="user-profile.html"> <i class="ti-user"></i> Perfil
+							href="<%=request.getContextPath()%>/usuario.jsp?acao=listarUser">
+								<i class="ti-user"></i> Perfil
 						</a></li>
 						<li class="waves-effect waves-light"><a
-							href="email-inbox.html"> <i class="ti-email"></i> Minhas Mensagens
+							href="email-inbox.html"> <i class="ti-email"></i> Minhas
+								Mensagens
 						</a></li>
 						<li class="waves-effect waves-light"><a
-							href="auth-lock-screen.html"> <i class="ti-lock"></i> Bloquear Tela
+							href="auth-lock-screen.html"> <i class="ti-lock"></i>
+								Bloquear Tela
 						</a></li>
 						<li class="waves-effect waves-light"><a
 							href="/curso-jsp/ServletLogin?acao=logout"> <i

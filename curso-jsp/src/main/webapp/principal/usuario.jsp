@@ -2,6 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<!-- declaração da tag de JSTL / fazer a declaração da dependencia no pom.xml -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 
 <jsp:include page="head.jsp"></jsp:include>
@@ -94,6 +97,38 @@
 														</form>
 													</div>
 												</div>
+												<div class="card">
+													<div class="card-header">
+														<table class="table table-sm table-responsive table-hover"
+															style="height: 400px; overflow: auto;"
+															id="tabelaResultadosView">
+															<thead
+																class="table-waves-effect waves-light btn-grd-inverse">
+																<tr>
+																	<th scope="col">ID</th>
+																	<th scope="col">Nome</th>
+																	<th scope="col">Login</th>
+																	<th scope="col">Opções</th>
+																</tr>
+															</thead>
+															<tbody>
+																<c:forEach items="${modelLogins}" var='ml'>
+																	<tr>
+																		<td><c:out value="${ml.id}"></c:out></td>
+																		<td><c:out value="${ml.nome}"></c:out></td>
+																		<td><c:out value="${ml.login}"></c:out></td>
+																		<td><a
+																			class="btn waves-effect waves-light btn-grd-info"
+																			href="ServletUsuarioController?acao=buscarEditar&id=${ml.id}">Editar</a>
+																			<a
+																			class="btn waves-effect waves-light btn-grd-danger"
+																			type="button" onclick="ServletUsuarioController?acao=deletar&id=${ml.id};">Excluir</a></td>
+																	</tr>
+																</c:forEach>
+															</tbody>
+														</table>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -116,7 +151,7 @@
 					<h5 class="modal-title">Pesquisar Usuário por nome:</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">×</span>
+						<span aria-hidden="true">X</span>
 					</button>
 				</div>
 				<div class="modal-body">

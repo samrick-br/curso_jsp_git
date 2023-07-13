@@ -14,8 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelLogin;
 
-@WebServlet("/ServletUsuarioController")
-public class ServletUsuarioController extends HttpServlet {
+@WebServlet(urlPatterns = { "/ServletUsuarioController", "/usuario.jsp" })
+public class ServletUsuarioController extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
 
 	private DAOUsuarioRepository daoUsuarioRepository = new DAOUsuarioRepository();
@@ -32,16 +32,24 @@ public class ServletUsuarioController extends HttpServlet {
 			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
 				String idUser = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUser);
+
+				List<ModelLogin> modelLogins = daoUsuarioRepository
+						.consultarUsuarioList(super.getUsuarioLogado(request));
+				request.setAttribute("modelLogins", modelLogins);
+
 				request.setAttribute("msg", "Usuário deletado com sucesso! Operação não poderá ser desfeita.");
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarAjax")) {
 				String idUser = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUser);
 				response.getWriter().write("Usuário deletado com sucesso! Operação não poderá ser desfeita.");
+
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("BuscarUserAjax")) {
 				String nomeBusca = request.getParameter("nomeBusca");
 				System.out.println(nomeBusca);
-				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultarUsuarioList(nomeBusca);
+				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultarUsuarioList(nomeBusca,
+						super.getUsuarioLogado(request));
 
 				/* adicionar dependencia Jacson Json no pom do maven */
 				ObjectMapper mapper = new ObjectMapper();
@@ -51,9 +59,22 @@ public class ServletUsuarioController extends HttpServlet {
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
 				String id = request.getParameter("id");
 
-				ModelLogin modelLogin = daoUsuarioRepository.consultausuarioId(id);
+				ModelLogin modelLogin = daoUsuarioRepository.consultausuarioId(id, super.getUsuarioLogado(request));
+
+				List<ModelLogin> modelLogins = daoUsuarioRepository
+						.consultarUsuarioList(super.getUsuarioLogado(request));
+				request.setAttribute("modelLogins", modelLogins);
+
 				request.setAttribute("msg", "Usuário em edição");
 				request.setAttribute("modelLogin", modelLogin);
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")) {
+				List<ModelLogin> modelLogins = daoUsuarioRepository
+						.consultarUsuarioList(super.getUsuarioLogado(request));
+
+				request.setAttribute("msg", "Usuários carregados!");
+				request.setAttribute("modelLogins", modelLogins);
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 
 			} else {
@@ -99,7 +120,11 @@ public class ServletUsuarioController extends HttpServlet {
 				} else {
 					msg = "Usuario atualizado com sucesso!";
 				}
-				modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin);
+				modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin, super.getUsuarioLogado(request));
+
+				List<ModelLogin> modelLogins = daoUsuarioRepository
+						.consultarUsuarioList(super.getUsuarioLogado(request));
+				request.setAttribute("modelLogins", modelLogins);
 			}
 
 			request.setAttribute("msg", msg);

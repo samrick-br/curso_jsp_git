@@ -18,9 +18,19 @@ CREATE DATABASE "curso-jsp"
 
 CREATE TABLE IF NOT EXISTS public.model_login
 (
-    login character varying(200) COLLATE pg_catalog."default",
-    senha character varying(200) COLLATE pg_catalog."default",
-    CONSTRAINT login_unique UNIQUE (login)
+    login character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    senha character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass),
+    nome character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    email character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    useradmin boolean NOT NULL DEFAULT false,
+    usuario_id bigint NOT NULL DEFAULT 1,
+    CONSTRAINT model_login_pkey PRIMARY KEY (id),
+    CONSTRAINT login_unique UNIQUE (login),
+    CONSTRAINT usuario_fk FOREIGN KEY (usuario_id)
+        REFERENCES public.model_login (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
 
 TABLESPACE pg_default;
